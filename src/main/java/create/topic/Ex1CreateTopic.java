@@ -14,11 +14,13 @@ public class Ex1CreateTopic {
 
         try (var client = Admin.create(properties)) {
             var requestedTopic = new NewTopic("ex1-topic", 2, (short) 2);
+            var requestedTopic2 = new NewTopic("ex1-topic2", 2, (short) 6);
 
-            var topicResult = client.createTopics(List.of(requestedTopic));
+            var topicResult = client.createTopics(List.of(requestedTopic, requestedTopic2));
             // не факт, что топик уже создан, пользоваться им нельзя
 
-            topicResult.all().get();
+            topicResult.topicId("ex1-topic").get();
+            topicResult.topicId("ex1-topic2").get();
             // топик точно создан, можете пользоваться
         }
     }
